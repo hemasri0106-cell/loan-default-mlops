@@ -1,0 +1,19 @@
+Feature,Feature_Type,Metric,Drift_Status
+issue_d,Categorical,2.0000000000000004,Significant Drift
+revol_util,Numerical,0.3216703355316821,Significant Drift
+verification_status,Categorical,0.252330995637996,Significant Drift
+sub_grade,Categorical,0.19132743404057084,Moderate Drift
+home_ownership,Categorical,0.1559019099648499,Moderate Drift
+addr_state,Categorical,0.15499299538389869,Moderate Drift
+int_rate,Numerical,0.15469704756438224,Moderate Drift
+purpose,Categorical,0.1485616524795664,Moderate Drift
+grade,Categorical,0.13862179308008296,Moderate Drift
+emp_length,Categorical,0.12050705783987828,Moderate Drift
+loan_amnt,Numerical,0.06599829584474348,No Drift
+dti,Numerical,0.05428448806821468,No Drift
+installment,Numerical,0.043823611836335326,No Drift
+term,Categorical,0.03852880616609494,No Drift
+fico_range_high,Numerical,0.0333504701717254,No Drift
+fico_range_low,Numerical,0.0333504701717254,No Drift
+annual_inc,Numerical,0.026488119501641545,No Drift
+open_acc,Numerical,0.02471922995502758,No Drift

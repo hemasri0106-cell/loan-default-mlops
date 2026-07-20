@@ -1,0 +1,19 @@
+{
+    "model_name": "Random Forest Baseline",
+    "training_datetime": "2026-07-18 16:30:55",
+    "dataset_used": "Lending Club Preprocessed Splits",
+    "training_time_seconds": 2.3811748027801514,
+    "metrics": {
+        "accuracy": 0.6498,
+        "precision": 0.3594442448197389,
+        "recall": 0.6444062701309856,
+        "f1_score": 0.46147931723819774,
+        "roc_auc": 0.7026798600370756
+    },
+    "confusion_matrix": {
+        "tn": 9995,
+        "fp": 5348,
+        "fn": 1656,
+        "tp": 3001
+    }
+}

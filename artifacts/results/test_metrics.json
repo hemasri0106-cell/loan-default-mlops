@@ -1,0 +1,15 @@
+{
+    "model": "logistic_regression",
+    "dataset": "test",
+    "accuracy": 0.60845,
+    "precision": 0.33656396653744136,
+    "recall": 0.712988977739356,
+    "f1_score": 0.45727354633030703,
+    "roc_auc": 0.6970011094057881,
+    "confusion_matrix": {
+        "tn": 8870,
+        "fp": 6503,
+        "fn": 1328,
+        "tp": 3299
+    }
+}

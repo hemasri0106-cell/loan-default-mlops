@@ -1,0 +1,19 @@
+{
+    "model_name": "Logistic Regression Baseline",
+    "training_datetime": "2026-07-18 15:40:25",
+    "dataset_used": "Lending Club Preprocessed Splits",
+    "training_time_seconds": 3.7257513999938965,
+    "metrics": {
+        "accuracy": 0.63665,
+        "precision": 0.3528748590755355,
+        "recall": 0.6721065063345502,
+        "f1_score": 0.46277814740888595,
+        "roc_auc": 0.7038439504950649
+    },
+    "confusion_matrix": {
+        "tn": 9603,
+        "fp": 5740,
+        "fn": 1527,
+        "tp": 3130
+    }
+}

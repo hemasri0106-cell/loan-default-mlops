@@ -1,0 +1,14 @@
+{
+    "selected_model": "logistic_regression",
+    "selection_date": "2026-07-18 18:57:39",
+    "selection_reason": "Statistically similar ROC-AUC to XGBoost Baseline (difference of 0.0021 is less than 0.005). Selected as the best model because of a higher F1 Score (0.4628 vs 0.4623) and higher Recall (0.6721 vs 0.6283).",
+    "metrics": {
+        "accuracy": 0.63665,
+        "precision": 0.3528748590755355,
+        "recall": 0.6721065063345502,
+        "f1_score": 0.46277814740888595,
+        "roc_auc": 0.7038439504950649,
+        "training_time_seconds": 3.7257513999938965
+    },
+    "model_path": "artifacts/models/logistic_regression.joblib"
+}

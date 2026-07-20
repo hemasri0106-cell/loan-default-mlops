@@ -1,0 +1,10 @@
+{
+    "training_dataset": "2007-2015",
+    "production_dataset": "2018",
+    "total_features": 18,
+    "no_drift": 8,
+    "moderate_drift": 7,
+    "significant_drift": 3,
+    "overall_status": "Retraining Recommended",
+    "retraining_recommended": true
+}
