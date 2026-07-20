@@ -2,7 +2,8 @@ import os
 import sys
 import logging
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict, Any, List
+from contextlib import asynccontextmanager
 
 # Ensure project root and app directory are in sys.path
 CURRENT_FILE = Path(__file__).resolve()
@@ -33,46 +34,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-app = FastAPI(
-    title="Credit Risk Prediction System",
-    description="AI-powered loan default prediction using machine learning and automated model monitoring.",
-    version="2.0.0"
-)
-
-# Mount static files and Jinja2 templates
-app.mount("/static", StaticFiles(directory=APP_DIR / "static"), name="static")
-templates = Jinja2Templates(directory=APP_DIR / "templates")
-
-# Input Schema Validation
-class LoanPredictionInput(BaseModel):
-    # Borrower Info
-    annual_inc: float = Field(..., example=75000.0, description="Annual Income ($)")
-    emp_length: str = Field(..., example="10+ years", description="Employment Length")
-    home_ownership: str = Field(..., example="MORTGAGE", description="Home Ownership")
-    addr_state: str = Field(..., example="CA", description="State Code")
-    
-    # Loan Details
-    loan_amnt: float = Field(..., example=15000.0, description="Loan Amount ($)")
-    term: str = Field(..., example=" 36 months", description="Loan Term")
-    int_rate: float = Field(..., example=11.5, description="Interest Rate (%)")
-    installment: float = Field(..., example=350.0, description="Monthly Installment ($)")
-    purpose: str = Field(..., example="debt_consolidation", description="Loan Purpose")
-    issue_d: str = Field(..., example="2018-01-01", description="Issue Date (YYYY-MM-DD)")
-    
-    # Credit History
-    fico_range_low: float = Field(..., example=700.0, description="FICO Range Low")
-    fico_range_high: float = Field(..., example=704.0, description="FICO Range High")
-    open_acc: float = Field(..., example=11.0, description="Open Credit Lines")
-    revol_util: float = Field(..., example=45.0, description="Revolving Line Utilization (%)")
-    
-    # Ratios & Ratings
-    dti: float = Field(..., example=16.5, description="Debt-To-Income Ratio (%)")
-    grade: str = Field(..., example="B", description="Credit Grade")
-    sub_grade: str = Field(..., example="B2", description="Credit Sub-Grade")
-    verification_status: str = Field(..., example="Source Verified", description="Income Verification Status")
-
-@app.on_event("startup")
-async def startup_event():
+# Lifespan Context Manager (replaces deprecated on_event)
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     """Warm up and load predictor service artifacts at application startup."""
     logger.info("Initializing FastAPI application...")
     try:
@@ -81,6 +45,46 @@ async def startup_event():
         logger.info(f"Deployed Champion Model Active: {info['selected_model']} (Version {info['version']})")
     except Exception as e:
         logger.error(f"Error initializing predictor service on startup: {e}")
+    yield
+
+app = FastAPI(
+    title="Credit Risk Prediction System",
+    description="AI-powered loan default prediction using machine learning and automated model monitoring.",
+    version="2.0.0",
+    lifespan=lifespan
+)
+
+# Mount static files and Jinja2 templates
+app.mount("/static", StaticFiles(directory=APP_DIR / "static"), name="static")
+templates = Jinja2Templates(directory=APP_DIR / "templates")
+
+# Input Schema Validation (Pydantic V2 Compatible)
+class LoanPredictionInput(BaseModel):
+    # Borrower Info
+    annual_inc: float = Field(..., json_schema_extra={"example": 75000.0}, description="Annual Income ($)")
+    emp_length: str = Field(..., json_schema_extra={"example": "10+ years"}, description="Employment Length")
+    home_ownership: str = Field(..., json_schema_extra={"example": "MORTGAGE"}, description="Home Ownership")
+    addr_state: str = Field(..., json_schema_extra={"example": "CA"}, description="State Code")
+    
+    # Loan Details
+    loan_amnt: float = Field(..., json_schema_extra={"example": 15000.0}, description="Loan Amount ($)")
+    term: str = Field(..., json_schema_extra={"example": " 36 months"}, description="Loan Term")
+    int_rate: float = Field(..., json_schema_extra={"example": 11.5}, description="Interest Rate (%)")
+    installment: float = Field(..., json_schema_extra={"example": 350.0}, description="Monthly Installment ($)")
+    purpose: str = Field(..., json_schema_extra={"example": "debt_consolidation"}, description="Loan Purpose")
+    issue_d: str = Field(..., json_schema_extra={"example": "2018-01-01"}, description="Issue Date (YYYY-MM-DD)")
+    
+    # Credit History
+    fico_range_low: float = Field(..., json_schema_extra={"example": 700.0}, description="FICO Range Low")
+    fico_range_high: float = Field(..., json_schema_extra={"example": 704.0}, description="FICO Range High")
+    open_acc: float = Field(..., json_schema_extra={"example": 11.0}, description="Open Credit Lines")
+    revol_util: float = Field(..., json_schema_extra={"example": 45.0}, description="Revolving Line Utilization (%)")
+    
+    # Ratios & Ratings
+    dti: float = Field(..., json_schema_extra={"example": 16.5}, description="Debt-To-Income Ratio (%)")
+    grade: str = Field(..., json_schema_extra={"example": "B"}, description="Credit Grade")
+    sub_grade: str = Field(..., json_schema_extra={"example": "B2"}, description="Credit Sub-Grade")
+    verification_status: str = Field(..., json_schema_extra={"example": "Source Verified"}, description="Income Verification Status")
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
@@ -102,7 +106,7 @@ async def predict_loan_risk(payload: LoanPredictionInput):
     """API endpoint for loan default prediction."""
     try:
         service = get_predictor_service()
-        input_dict = payload.dict()
+        input_dict = payload.model_dump() if hasattr(payload, "model_dump") else payload.dict()
         
         logger.info(f"Prediction request received for loan_amnt=${payload.loan_amnt:,.2f}, annual_inc=${payload.annual_inc:,.2f}")
         result = service.predict(input_dict)
