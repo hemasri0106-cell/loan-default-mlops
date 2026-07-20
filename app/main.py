@@ -1,14 +1,29 @@
+import os
 import sys
 import logging
 from pathlib import Path
 from typing import Dict, Any
+
+# Ensure project root and app directory are in sys.path
+CURRENT_FILE = Path(__file__).resolve()
+APP_DIR = CURRENT_FILE.parent
+BASE_DIR = APP_DIR.parent
+
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+if str(APP_DIR) not in sys.path:
+    sys.path.insert(0, str(APP_DIR))
+
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 
-from app.predictor import get_predictor_service
+try:
+    from app.predictor import get_predictor_service
+except ImportError:
+    from predictor import get_predictor_service
 
 # Logging setup
 logging.basicConfig(
@@ -17,10 +32,6 @@ logging.basicConfig(
     handlers=[logging.StreamHandler(sys.stdout)]
 )
 logger = logging.getLogger(__name__)
-
-# Paths
-BASE_DIR = Path("d:/onedrive/Desktop/loan predictor")
-APP_DIR = BASE_DIR / "app"
 
 app = FastAPI(
     title="Credit Risk Prediction System",
@@ -78,11 +89,9 @@ async def read_root(request: Request):
         service = get_predictor_service()
         model_info = service.get_model_info()
         return templates.TemplateResponse(
-            "index.html", 
-            {
-                "request": request, 
-                "model_info": model_info
-            }
+            request=request,
+            name="index.html",
+            context={"model_info": model_info}
         )
     except Exception as e:
         logger.error(f"Error rendering homepage: {e}")
@@ -120,3 +129,10 @@ async def get_model_info_api():
     except Exception as e:
         logger.error(f"Error fetching model info: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+if __name__ == "__main__":
+    import uvicorn
+    print("\n" + "="*50)
+    print("  Starting Credit Risk Web Server at http://127.0.0.1:8000")
+    print("="*50 + "\n")
+    uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)

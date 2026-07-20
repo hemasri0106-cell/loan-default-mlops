@@ -22,7 +22,8 @@ class LoanPredictorService:
 
     def __init__(self, base_dir: Path = None):
         if base_dir is None:
-            base_dir = Path("d:/onedrive/Desktop/loan predictor")
+            # Dynamically resolve project root relative to this file
+            base_dir = Path(__file__).resolve().parent.parent
         self.base_dir = base_dir
         self.registry_path = self.base_dir / "artifacts" / "model_registry.json"
         
