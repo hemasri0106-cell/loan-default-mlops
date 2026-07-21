@@ -4,9 +4,9 @@
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.139-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.4+-F7931E.svg?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![XGBoost](https://img.shields.io/badge/XGBoost-3.0.4-339933.svg?logo=xgboost&logoColor=white)](https://xgboost.readthedocs.io/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-An enterprise-grade, end-to-end MLOps platform for loan default prediction and credit risk assessment. Built with Python, Scikit-Learn, XGBoost, and FastAPI, **CreditAI** automates the complete machine learning lifecycle—from chronological data splitting and feature engineering to model registry management, Population Stability Index (PSI) data drift monitoring, automated retraining, and a real-time SaaS prediction dashboard.
+
+CreditAI is an end-to-end MLOps platform for loan default prediction and credit risk assessment. The project implements a complete machine learning workflow, including chronological data preprocessing, feature engineering, training and comparison of multiple machine learning models (Logistic Regression, Random Forest, and XGBoost), champion model selection, model registry management, Population Stability Index (PSI) drift detection, automated retraining, and deployment through a FastAPI-powered interactive web application.
 
 ---
 
@@ -18,7 +18,7 @@ CreditAI bridges the gap between machine learning model development and producti
 
 ### Real-Time Credit Risk Assessment Dashboard
 ![CreditAI Dashboard Interface](assets/screenshots/dashboard_awaiting_input.png)
-*Figure 1: The CreditAI FinTech SaaS dashboard displaying organized borrower feature input cards, real-time risk assessment indicators, and live MLOps Model Registry metadata (Version 2).*
+*Figure 1: The CreditAI Interactive dashboard displaying organized borrower feature input cards, real-time risk assessment indicators, and live MLOps Model Registry metadata (Version 2).*
 
 </div>
 
@@ -62,14 +62,14 @@ CreditAI bridges the gap between machine learning model development and producti
 - **Population Stability Index (PSI) Drift Detection**: Quantile-binned PSI computation for numerical features and category frequency divergence monitoring for categorical features.
 - **Closed-Loop Automated Retraining**: Conditional retraining pipeline triggered by data drift that fits a fresh preprocessor, retrains on combined data, and promotes the champion model upon meeting performance contracts.
 - **High-Performance FastAPI Inference**: Async prediction server serving probability estimations and risk scores with sub-50ms inference latency.
-- **Modern FinTech Dashboard**: Responsive SaaS UI built with HTML5, CSS3, Jinja2, and Vanilla JavaScript with glassmorphic cards and live MLOps statistics.
-
+- **Modern FinTech Dashboard**: Responsive web interface built with HTML5, CSS3, Jinja2, and Vanilla JavaScript featuring glassmorphic cards and live MLOps statistics.
 ---
 
 ## 🛠️ Tech Stack
 
 - **Core Programming**: Python 3.12
-- **Machine Learning & Pipeline**: Scikit-Learn, XGBoost, Joblib, PyArrow
+- **Machine Learning & Pipeline**: Scikit-Learn, XGBoost
+- **MLOps**: Joblib, PyArrow
 - **Data Engineering & Analytics**: Pandas, NumPy
 - **Web API & Server**: FastAPI, Starlette, Uvicorn, Jinja2, Pydantic V2
 - **Frontend & Styling**: Vanilla HTML5, CSS3 (Custom Dark Navy FinTech Design System), JavaScript (Fetch API)
@@ -231,7 +231,7 @@ The table below summarizes validation metrics evaluated on the 2016 split during
 ## 📁 Project Directory Structure
 
 ```text
-credit-risk-mlops/
+loan-default-mlops/
 ├── app/                                 # FastAPI Serving & Web Dashboard
 │   ├── main.py                          # FastAPI server endpoints & lifespan setup
 │   ├── predictor.py                     # Singleton inference service & registry loader
@@ -406,7 +406,3 @@ python app/main.py
 - **Repository**: [hemasri0106-cell/credit-risk-mlops](https://github.com/hemasri0106-cell/credit-risk-mlops)
 
 ---
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
