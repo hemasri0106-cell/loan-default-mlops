@@ -4,7 +4,7 @@
     "version": 2,
     "promotion_reason": "Retrained model satisfied promotion criteria: ROC-AUC (0.7057) >= Deployed Test ROC-AUC (0.6970), and F1 Score (0.4595) did not decrease by more than 1% compared to deployed F1 (0.4573).",
     "previous_version": 1,
-    "promotion_date": "2026-07-20 08:38:35",
+    "promotion_date": "2026-07-20 09:25:39",
     "metrics": {
         "accuracy": 0.66075,
         "precision": 0.36524822695035464,

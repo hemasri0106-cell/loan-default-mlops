@@ -1,8 +1,8 @@
 {
     "model": "logistic_regression",
     "dataset": "validation_retrained",
-    "training_datetime": "2026-07-20 08:38:35",
-    "training_time_seconds": 5.285002946853638,
+    "training_datetime": "2026-07-20 09:25:39",
+    "training_time_seconds": 3.6437795162200928,
     "metrics": {
         "accuracy": 0.66075,
         "precision": 0.36524822695035464,
