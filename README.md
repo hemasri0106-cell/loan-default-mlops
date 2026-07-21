@@ -231,7 +231,7 @@ The table below summarizes validation metrics evaluated on the 2016 split during
 ## 📁 Project Directory Structure
 
 ```text
-loan-default-mlops/
+credit-risk-mlops/
 ├── app/                                 # FastAPI Serving & Web Dashboard
 │   ├── main.py                          # FastAPI server endpoints & lifespan setup
 │   ├── predictor.py                     # Singleton inference service & registry loader
@@ -279,8 +279,8 @@ Follow these steps to set up and run CreditAI on Windows, macOS, or Linux.
 ### Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/hemasri0106-cell/loan-default-mlops.git
-cd loan-default-mlops
+git clone https://github.com/hemasri0106-cell/credit-risk-mlops.git
+cd credit-risk-mlops
 ```
 
 ### Step 2: Create Virtual Environment
@@ -403,7 +403,7 @@ python app/main.py
 **Hemasri Challa**
 - **Email**: [hemasri0106@gmail.com](mailto:hemasri0106@gmail.com)
 - **GitHub**: [@hemasri0106-cell](https://github.com/hemasri0106-cell)
-- **Repository**: [hemasri0106-cell/loan-default-mlops](https://github.com/hemasri0106-cell/loan-default-mlops)
+- **Repository**: [hemasri0106-cell/credit-risk-mlops](https://github.com/hemasri0106-cell/credit-risk-mlops)
 
 ---
 
